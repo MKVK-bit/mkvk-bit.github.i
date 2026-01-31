@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduBase | Login</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#F0F7FF',
+                            100: '#E0F2FE',
+                            500: '#3B82F6',
+                            600: '#2563EB',
+                            900: '#1A2B3C',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #F8FAFC; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .hidden-view { display: none !important; }
+    </style>
+</head>
+<body class="text-slate-600 font-sans antialiased h-screen overflow-hidden flex flex-col">
+
+    <section id="login-view" class="flex-1 flex w-full h-full bg-white relative z-50">
+        
+        <div class="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-12 lg:px-20 py-12 bg-white">
+            <div class="max-w-md w-full mx-auto space-y-8 animate-fade-in">
+                
+                <div class="flex items-center gap-2 mb-8">
+                    <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white">
+                        <i class="ph ph-graduation-cap text-xl"></i>
+                    </div>
+                    <span class="font-bold text-xl text-brand-900 tracking-tight">EduBase</span>
+                </div>
+
+                <div>
+                    <h1 class="text-3xl font-bold text-slate-900">Welcome back</h1>
+                    <p class="text-slate-500 mt-2">Please enter your details to sign in.</p>
+                </div>
+
+                <div class="p-1 bg-slate-100 rounded-lg flex gap-1 relative">
+                    <div id="role-indicator" class="absolute left-1 top-1 w-[calc(50%-4px)] h-[calc(100%-8px)] bg-white rounded-md shadow-sm transition-all duration-300"></div>
+                    <button onclick="toggleRole('student')" class="flex-1 py-2 text-sm font-medium relative z-10 text-brand-900 transition text-center" id="btn-student">
+                        Student
+                    </button>
+                    <button onclick="toggleRole('mentor')" class="flex-1 py-2 text-sm font-medium relative z-10 text-slate-500 transition text-center" id="btn-mentor">
+                        Expert Mentor
+                    </button>
+                </div>
+
+                <form onsubmit="handleLogin(event)" class="space-y-5">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+                        <input type="email" value="demo@edubase.com" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 transition" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                        <input type="password" value="password123" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 transition" required>
+                    </div>
+                    
+                    <div class="flex items-center justify-between text-sm">
+                        <label class="flex items-center gap-2 text-slate-600 cursor-pointer">
+                            <input type="checkbox" class="rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+                            Remember me
+                        </label>
+                        <a href="#" class="text-brand-600 font-medium hover:underline">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" id="login-btn" class="w-full bg-brand-900 text-white py-3 rounded-lg font-bold hover:bg-brand-800 transition shadow-lg shadow-brand-900/20 flex justify-center items-center gap-2">
+                        <span>Sign In</span>
+                        <i class="ph ph-arrow-right"></i>
+                    </button>
+                </form>
+
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
+                    <div class="relative flex justify-center text-sm"><span class="px-2 bg-white text-slate-500">Or continue with</span></div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <button class="flex justify-center items-center gap-2 px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition">
+                        <i class="ph ph-google-logo text-lg"></i> <span class="text-sm font-medium">Google</span>
+                    </button>
+                    <button class="flex justify-center items-center gap-2 px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition">
+                        <i class="ph ph-github-logo text-lg"></i> <span class="text-sm font-medium">GitHub</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="hidden lg:flex w-1/2 bg-brand-50 relative overflow-hidden items-center justify-center p-12">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-brand-200 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-blue-200 rounded-full blur-3xl opacity-50 translate-y-1/2 -translate-x-1/2"></div>
+            
+            <div class="relative z-10 max-w-lg text-center">
+                <div class="bg-white/40 backdrop-blur-xl p-8 rounded-3xl border border-white/50 shadow-xl mb-8 animate-fade-in" style="animation-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Students" class="w-full h-48 object-cover rounded-xl mb-6 shadow-md">
+                    <h2 class="text-2xl font-bold text-brand-900 mb-2">Master New Skills</h2>
+                    <p class="text-slate-600">Join 15,000+ learners and mentors on the world's most adaptive education platform.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="main-app" class="hidden-view h-full flex flex-col overflow-y-auto">
+        
+        <nav class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16 items-center">
+                    <div class="flex items-center gap-2 cursor-pointer" onclick="location.reload()">
+                        <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white">
+                            <i class="ph ph-graduation-cap text-xl"></i>
+                        </div>
+                        <span class="font-bold text-xl text-brand-900 tracking-tight">EduBase</span>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        <span id="user-role-badge" class="px-3 py-1 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-wide">Student</span>
+                        <div class="h-8 w-px bg-slate-200"></div>
+                        <div class="flex items-center gap-3">
+                            <div class="text-right hidden sm:block">
+                                <div class="text-sm font-bold text-slate-900" id="nav-user-name">Felix Anderson</div>
+                                <div class="text-xs text-slate-400">Premium Member</div>
+                            </div>
+                            <div class="w-9 h-9 rounded-full bg-brand-100 overflow-hidden border border-brand-200">
+                                <img id="nav-user-img" src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User">
+                            </div>
+                            <button onclick="logout()" class="ml-2 text-slate-400 hover:text-red-500 transition" title="Sign Out">
+                                <i class="ph ph-sign-out text-xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <main class="flex-1 bg-slate-50 p-4 md:p-8">
+            <div class="max-w-7xl mx-auto animate-fade-in">
+                
+                <div id="student-dashboard">
+                    <div class="mb-8">
+                        <h1 class="text-2xl md:text-3xl font-bold text-brand-900">Welcome back, Felix! 👋</h1>
+                        <p class="text-slate-500">You have 2 modules pending this week.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="p-2 bg-blue-50 rounded-lg text-blue-600"><i class="ph ph-chart-line-up text-xl"></i></div>
+                                <span class="text-xs font-medium bg-green-100 text-green-700 px-2 py-1 rounded">+12%</span>
+                            </div>
+                            <div class="text-3xl font-bold text-brand-900 mb-1">82%</div>
+                            <div class="text-sm text-slate-500">Course Mastery</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="p-2 bg-orange-50 rounded-lg text-orange-600"><i class="ph ph-fire text-xl"></i></div>
+                            </div>
+                            <div class="text-3xl font-bold text-brand-900 mb-1">12 Days</div>
+                            <div class="text-sm text-slate-500">Learning Streak</div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 relative overflow-hidden group cursor-pointer hover:border-brand-300 transition">
+                            <div class="absolute right-0 top-0 w-24 h-24 bg-brand-50 rounded-bl-full -mr-4 -mt-4 transition group-hover:bg-brand-100"></div>
+                            <div class="relative z-10">
+                                <div class="flex justify-between items-start mb-4">
+                                    <div class="p-2 bg-purple-50 rounded-lg text-purple-600"><i class="ph ph-video-camera text-xl"></i></div>
+                                </div>
+                                <div class="text-lg font-bold text-brand-900 mb-1">Meeting in 2h</div>
+                                <div class="text-sm text-slate-500">with Sarah Jenkins</div>
+                                <button class="mt-4 text-xs font-bold text-brand-600 uppercase tracking-wide hover:underline">Join Room &rarr;</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 space-y-6">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-bold text-lg text-brand-900">Current Path: UX Design</h3>
+                                <button class="text-brand-600 text-sm font-medium hover:underline">View Syllabus</button>
+                            </div>
+                            
+                            <div class="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+                                <div class="p-6 border-b border-slate-100 flex gap-4">
+                                    <div class="w-16 h-16 rounded-lg bg-brand-100 flex-shrink-0 flex items-center justify-center text-brand-600 text-2xl font-bold">2</div>
+                                    <div class="flex-1">
+                                        <h4 class="text-lg font-bold text-brand-900 mb-1">Wireframing & Prototyping</h4>
+                                        <div class="w-full bg-slate-100 rounded-full h-2 mb-2">
+                                            <div class="bg-brand-500 h-2 rounded-full" style="width: 45%"></div>
+                                        </div>
+                                        <div class="flex justify-between text-xs text-slate-500">
+                                            <span>4/12 Lessons</span>
+                                            <span>45 mins left</span>
+                                        </div>
+                                    </div>
+                                    <button class="self-center px-4 py-2 bg-brand-600 text-white rounded-lg text-sm font-medium hover:bg-brand-700">Resume</button>
+                                </div>
+                                <div class="p-4 bg-slate-50 text-sm text-slate-500 flex items-center justify-center gap-2">
+                                    <i class="ph ph-lock-key"></i> Next: User Testing Principles (Locked)
+                                </div>
+                            </div>
+
+                            <h3 class="font-bold text-lg text-brand-900 pt-4">Recommended Mentors</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div class="bg-white p-4 rounded-xl border border-slate-100 flex items-center gap-4 hover:shadow-md transition cursor-pointer">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" class="w-12 h-12 rounded-full bg-slate-100">
+                                    <div>
+                                        <div class="font-bold text-brand-900">Sarah Jenkins</div>
+                                        <div class="text-xs text-slate-500">UX Lead @ Airbnb</div>
+                                    </div>
+                                    <button class="ml-auto w-8 h-8 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center hover:bg-brand-600 hover:text-white transition"><i class="ph ph-plus"></i></button>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl border border-slate-100 flex items-center gap-4 hover:shadow-md transition cursor-pointer">
+                                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=David" class="w-12 h-12 rounded-full bg-slate-100">
+                                    <div>
+                                        <div class="font-bold text-brand-900">David Chen</div>
+                                        <div class="text-xs text-slate-500">Frontend Expert</div>
+                                    </div>
+                                    <button class="ml-auto w-8 h-8 rounded-full bg-brand-50 text-brand-600 flex items-center justify-center hover:bg-brand-600 hover:text-white transition"><i class="ph ph-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6">
+                                <h3 class="font-bold text-brand-900 mb-4">Skill Gap Analysis</h3>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex justify-between text-xs mb-1"><span>Figma</span> <span class="text-brand-600 font-bold">90%</span></div>
+                                        <div class="w-full bg-slate-100 rounded-full h-1.5"><div class="bg-brand-500 h-1.5 rounded-full" style="width: 90%"></div></div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-xs mb-1"><span>HTML/CSS</span> <span class="text-orange-500 font-bold">50%</span></div>
+                                        <div class="w-full bg-slate-100 rounded-full h-1.5"><div class="bg-orange-400 h-1.5 rounded-full" style="width: 50%"></div></div>
+                                    </div>
+                                </div>
+                                <button class="w-full mt-6 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50">Take Assessment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="mentor-dashboard" class="hidden-view">
+                    <div class="mb-8 flex justify-between items-end">
+                        <div>
+                            <h1 class="text-2xl md:text-3xl font-bold text-brand-900">Mentor Dashboard</h1>
+                            <p class="text-slate-500">Manage your sessions and track your impact.</p>
+                        </div>
+                        <button class="px-4 py-2 bg-brand-600 text-white rounded-lg text-sm font-medium hover:bg-brand-700 shadow-md flex items-center gap-2">
+                            <i class="ph ph-calendar-plus"></i> Edit Availability
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                        <div class="bg-brand-900 text-white p-5 rounded-xl shadow-lg">
+                            <div class="text-brand-200 text-xs font-medium uppercase mb-1">Total Earnings</div>
+                            <div class="text-3xl font-bold">$1,250</div>
+                            <div class="text-brand-300 text-xs mt-1">This month</div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                            <div class="text-slate-400 text-xs font-medium uppercase mb-1">Total Sessions</div>
+                            <div class="text-2xl font-bold text-slate-800">42</div>
+                            <div class="text-green-600 text-xs mt-1">Top 5% Mentor</div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                            <div class="text-slate-400 text-xs font-medium uppercase mb-1">Reputation</div>
+                            <div class="text-2xl font-bold text-slate-800 flex items-center gap-1">
+                                4.9 <i class="ph ph-star-fill text-yellow-400 text-lg"></i>
+                            </div>
+                            <div class="text-slate-400 text-xs mt-1">128 Reviews</div>
+                        </div>
+                        <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                            <div class="text-slate-400 text-xs font-medium uppercase mb-1">Pending Requests</div>
+                            <div class="text-2xl font-bold text-slate-800">3</div>
+                            <div class="text-orange-500 text-xs mt-1">Action required</div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                            <div class="p-6 border-b border-slate-100 flex justify-between items-center">
+                                <h3 class="font-bold text-lg text-brand-900">Upcoming Sessions</h3>
+                                <div class="flex gap-2 text-sm">
+                                    <button class="text-brand-600 font-medium">Today</button>
+                                    <button class="text-slate-400 hover:text-slate-600">Upcoming</button>
+                                </div>
+                            </div>
+                            <div class="divide-y divide-slate-50">
+                                <div class="p-5 flex items-center gap-4 hover:bg-slate-50 transition">
+                                    <div class="flex flex-col items-center justify-center w-12 h-12 bg-blue-50 text-blue-700 rounded-lg border border-blue-100">
+                                        <span class="text-xs font-bold uppercase">Feb</span>
+                                        <span class="text-lg font-bold">12</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-bold text-slate-900">React Performance Review</h4>
+                                        <p class="text-sm text-slate-500">with <span class="font-medium text-slate-700">Felix Anderson</span> • 4:00 PM (30 min)</p>
+                                    </div>
+                                    <button class="px-4 py-2 border border-brand-200 text-brand-700 rounded-lg text-sm font-medium hover:bg-brand-50">Launch</button>
+                                </div>
+                                <div class="p-5 flex items-center gap-4 hover:bg-slate-50 transition">
+                                    <div class="flex flex-col items-center justify-center w-12 h-12 bg-slate-50 text-slate-600 rounded-lg border border-slate-200">
+                                        <span class="text-xs font-bold uppercase">Feb</span>
+                                        <span class="text-lg font-bold">13</span>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="font-bold text-slate-900">Career Guidance</h4>
+                                        <p class="text-sm text-slate-500">with <span class="font-medium text-slate-700">Maya Ross</span> • 10:00 AM (60 min)</p>
+                                    </div>
+                                    <button class="px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50">Reschedule</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-6 h-fit">
+                            <h3 class="font-bold text-brand-900 mb-4">New Requests</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-slate-50 rounded-lg border border-slate-100">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" class="w-8 h-8 rounded-full bg-white">
+                                        <div>
+                                            <div class="text-sm font-bold text-slate-900">John D.</div>
+                                            <div class="text-xs text-slate-500">Frontend Basics</div>
+                                        </div>
+                                    </div>
+                                    <div class="flex gap-2">
+                                        <button class="flex-1 py-1.5 bg-brand-600 text-white text-xs font-bold rounded hover:bg-brand-700">Accept</button>
+                                        <button class="flex-1 py-1.5 bg-white border border-slate-200 text-slate-500 text-xs font-bold rounded hover:bg-slate-50">Decline</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // State
+        let currentRole = 'student'; // 'student' or 'mentor'
+        
+        // DOM Elements
+        const loginView = document.getElementById('login-view');
+        const mainApp = document.getElementById('main-app');
+        const roleIndicator = document.getElementById('role-indicator');
+        const btnStudent = document.getElementById('btn-student');
+        const btnMentor = document.getElementById('btn-mentor');
+        const studentDashboard = document.getElementById('student-dashboard');
+        const mentorDashboard = document.getElementById('mentor-dashboard');
+        
+        // Navbar Elements
+        const navRoleBadge = document.getElementById('user-role-badge');
+        const navUserName = document.getElementById('nav-user-name');
+        const navUserImg = document.getElementById('nav-user-img');
+
+        // 1. Role Toggle Logic
+        function toggleRole(role) {
+            currentRole = role;
+            if (role === 'student') {
+                roleIndicator.style.transform = 'translateX(0)';
+                btnStudent.classList.remove('text-slate-500');
+                btnStudent.classList.add('text-brand-900');
+                btnMentor.classList.remove('text-brand-900');
+                btnMentor.classList.add('text-slate-500');
+            } else {
+                roleIndicator.style.transform = 'translateX(100%)';
+                btnMentor.classList.remove('text-slate-500');
+                btnMentor.classList.add('text-brand-900');
+                btnStudent.classList.remove('text-brand-900');
+                btnStudent.classList.add('text-slate-500');
+            }
+        }
+
+        // 2. Login Handle Logic
+        function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('login-btn');
+            
+            // Loading State
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="ph ph-spinner animate-spin text-xl"></i> Verifying...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                // Transition to App
+                loginView.classList.add('hidden-view');
+                mainApp.classList.remove('hidden-view');
+                
+                // Set Dashboard based on Role
+                configureDashboard(currentRole);
+            }, 1000);
+        }
+
+        // 3. Configure Dashboard UI based on Role
+        function configureDashboard(role) {
+            if (role === 'student') {
+                // Show Student UI
+                studentDashboard.classList.remove('hidden-view');
+                mentorDashboard.classList.add('hidden-view');
+                
+                // Navbar Data
+                navRoleBadge.innerText = "Student";
+                navRoleBadge.className = "px-3 py-1 bg-brand-100 text-brand-700 rounded-full text-xs font-bold uppercase tracking-wide";
+                navUserName.innerText = "Felix Anderson";
+                navUserImg.src = "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix";
+            } else {
+                // Show Mentor UI
+                mentorDashboard.classList.remove('hidden-view');
+                studentDashboard.classList.add('hidden-view');
+                
+                // Navbar Data
+                navRoleBadge.innerText = "Expert Mentor";
+                navRoleBadge.className = "px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold uppercase tracking-wide";
+                navUserName.innerText = "Sarah Jenkins";
+                navUserImg.src = "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah";
+            }
+        }
+
+        // 4. Logout Logic
+        function logout() {
+            // Reset to Login View
+            mainApp.classList.add('hidden-view');
+            loginView.classList.remove('hidden-view');
+            
+            // Reset Button
+            const btn = document.getElementById('login-btn');
+            btn.innerHTML = '<span>Sign In</span><i class="ph ph-arrow-right"></i>';
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>
