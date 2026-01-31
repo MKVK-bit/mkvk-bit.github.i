@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EduBase | Learning Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">EduBase</div>
+  <nav>
+    <a href="#features">Features</a>
+    <a href="#mentors">Mentors</a>
+    <a href="#certificates">Certificates</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Build Strong Foundations<br><span>for Lifelong Learning</span></h1>
+  <p>Personalized learning and expert mentoring</p>
+</section>
+
+<section id="features" class="features">
+  <h2>Platform Features</h2>
+  <div class="grid">
+    <div class="card">Personalized Learning</div>
+    <div class="card">Diagnostic Tests</div>
+    <div class="card">Expert Mentors</div>
+    <div class="card">Certificates</div>
+  </div>
+</section>
+
+<section id="mentors" class="mentors">
+  <h2>Book a Mentor</h2>
+  <button onclick="bookSession()">Book Session</button>
+</section>
+
+<section id="certificates" class="certificates">
+  <h2>Generate Certificate</h2>
+  <button onclick="generateCertificate()">Generate</button>
+</section>
+
+<!-- Certificate Modal -->
+<div id="certificateModal" class="modal">
+  <div class="modal-content">
+    <h2>EduBase Certificate</h2>
+    <p>This certifies that</p>
+    <h3 id="certStudent">Student</h3>
+    <p>completed</p>
+    <strong id="certCourse">Course</strong>
+    <p>Score: <span id="certScore"></span></p>
+    <button onclick="closeCertificate()">Close</button>
+  </div>
+</div>
+
+<!-- JS -->
+<script type="module" src="assets/js/script.js"></script>
+</body>
+</html>
